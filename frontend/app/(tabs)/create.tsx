@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, Platform, TouchableOpacity } from 'react
 import { router } from 'expo-router';
 import api from '../../lib/api';
 import ListingForm, { ListingFormValues } from '../../components/ListingForm';
+import HeaderLogo from '../../components/HeaderLogo';
 import { Colors, Spacing, Typography, Radius } from '../../constants/theme';
 
 export default function CreateScreen() {
@@ -51,6 +52,7 @@ export default function CreateScreen() {
 
   return (
     <View style={styles.container}>
+      <HeaderLogo description="Have something you no longer need? List it in seconds and connect with the right Chula buyer today." />
       <Text style={styles.title}>Post a Listing</Text>
       <ListingForm onSubmit={handleSubmit} submitLabel="Post Listing" />
     </View>
@@ -58,9 +60,9 @@ export default function CreateScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
-  title: { fontSize: Typography.xl, fontWeight: '700', color: Colors.text, padding: Spacing.md, paddingTop: 56 },
-  successContainer: { flex: 1, backgroundColor: Colors.background, alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
+  container: { flex: 1, backgroundColor: 'transparent' },
+  title: { fontSize: 28, fontWeight: '800', color: Colors.text, paddingHorizontal: Spacing.md, paddingTop: Spacing.lg, paddingBottom: Spacing.md },
+  successContainer: { flex: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
   successIcon: { fontSize: 64, color: Colors.primary, marginBottom: Spacing.md },
   successTitle: { fontSize: Typography.xl, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
   successSub: { fontSize: Typography.base, color: Colors.textSecondary, textAlign: 'center', marginBottom: Spacing.xl },

@@ -207,7 +207,7 @@ export default function ListingDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
+  container: { flex: 1, backgroundColor: 'transparent' },
   imageContainer: { alignItems: 'center', paddingVertical: Spacing.sm },
   image: { width: 300, height: 300, backgroundColor: Colors.border, borderRadius: Radius.md },
   placeholder: { alignItems: 'center', justifyContent: 'center' },

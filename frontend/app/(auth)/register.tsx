@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, SafeAreaView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
 import api from '../../lib/api';
@@ -44,8 +45,15 @@ export default function RegisterScreen() {
         </TouchableOpacity>
       </SafeAreaView>
       <ScrollView contentContainerStyle={styles.inner}>
-        <Text style={styles.appName}>Create Account</Text>
-        <Text style={styles.subtitle}>Join the Chula SecondHand community</Text>
+        <View style={styles.headerRow}>
+          <View style={styles.iconBg}>
+            <Ionicons name="refresh" size={38} color={Colors.surface} />
+          </View>
+          <View style={styles.headerTextCol}>
+            <Text style={styles.appName}>CampusLoop</Text>
+            <Text style={styles.subtitle}>BUY SMART. SELL EASY. REPEAT.</Text>
+          </View>
+        </View>
 
         <Text style={styles.label}>Full Name</Text>
         <Controller
@@ -53,7 +61,7 @@ export default function RegisterScreen() {
           name="name"
           rules={{ required: 'Name is required' }}
           render={({ field: { onChange, value } }) => (
-            <TextInput style={[styles.input, errors.name && styles.inputError]} value={value} onChangeText={onChange} placeholder="Your full name" />
+            <TextInput style={[styles.input, errors.name && styles.inputError]} value={value} onChangeText={onChange} placeholder="Your full name" placeholderTextColor={Colors.textSecondary} />
           )}
         />
         {errors.name && <Text style={styles.errorText}>{errors.name.message}</Text>}
@@ -72,6 +80,7 @@ export default function RegisterScreen() {
               value={value}
               onChangeText={onChange}
               placeholder="you@student.chula.ac.th"
+              placeholderTextColor={Colors.textSecondary}
               keyboardType="email-address"
               autoCapitalize="none"
             />
@@ -85,7 +94,7 @@ export default function RegisterScreen() {
           name="password"
           rules={{ required: 'Password is required', minLength: { value: 8, message: 'Minimum 8 characters' } }}
           render={({ field: { onChange, value } }) => (
-            <TextInput style={[styles.input, errors.password && styles.inputError]} value={value} onChangeText={onChange} placeholder="Minimum 8 characters" secureTextEntry />
+            <TextInput style={[styles.input, errors.password && styles.inputError]} value={value} onChangeText={onChange} placeholder="Minimum 8 characters" placeholderTextColor={Colors.textSecondary} secureTextEntry />
           )}
         />
         {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
@@ -99,7 +108,7 @@ export default function RegisterScreen() {
             validate: (v) => v === watch('password') || 'Passwords do not match',
           }}
           render={({ field: { onChange, value } }) => (
-            <TextInput style={[styles.input, errors.confirmPassword && styles.inputError]} value={value} onChangeText={onChange} placeholder="Repeat password" secureTextEntry />
+            <TextInput style={[styles.input, errors.confirmPassword && styles.inputError]} value={value} onChangeText={onChange} placeholder="Repeat password" placeholderTextColor={Colors.textSecondary} secureTextEntry />
           )}
         />
         {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>}
@@ -117,14 +126,17 @@ export default function RegisterScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
+  container: { flex: 1, backgroundColor: 'transparent' },
   backBtn: { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   backBtnText: { color: Colors.primary, fontSize: Typography.base, fontWeight: '600' },
   inner: { padding: Spacing.xl, paddingBottom: 40 },
-  appName: { fontSize: Typography['2xl'], fontWeight: '800', color: Colors.primary, textAlign: 'center', marginBottom: Spacing.xs },
-  subtitle: { fontSize: Typography.sm, color: Colors.textSecondary, textAlign: 'center', marginBottom: Spacing.xl },
-  label: { fontSize: Typography.sm, fontWeight: '600', color: Colors.text, marginBottom: Spacing.xs, marginTop: Spacing.md },
-  input: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.sm, fontSize: Typography.base, color: Colors.text },
+  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: Spacing.xl, gap: Spacing.md },
+  iconBg: { backgroundColor: Colors.primary, width: 56, height: 56, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
+  headerTextCol: { justifyContent: 'center' },
+  appName: { fontSize: 32, fontWeight: '800', color: Colors.primary, marginBottom: 2, letterSpacing: -0.5 },
+  subtitle: { fontSize: 10, color: Colors.textSecondary, fontWeight: '700', letterSpacing: 0.5 },
+  label: { fontSize: Typography.base, fontWeight: '700', color: Colors.text, marginBottom: Spacing.sm, marginTop: Spacing.lg },
+  input: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, fontSize: Typography.sm, color: Colors.text },
   inputError: { borderColor: Colors.error },
   errorText: { color: Colors.error, fontSize: Typography.xs, marginTop: 2 },
   button: { marginTop: Spacing.xl, backgroundColor: Colors.primary, borderRadius: Radius.md, padding: Spacing.md, alignItems: 'center' },

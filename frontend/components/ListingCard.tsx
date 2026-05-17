@@ -54,6 +54,7 @@ export default function ListingCard({ listing }: Props) {
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     margin: 5,           // matches template cardItem margin
     backgroundColor: Colors.surface,
     borderRadius: Radius.md,
@@ -82,8 +83,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   image: {
-    width: 150,
-    height: 150,
+    width: '100%',
+    height: '100%',
   },
   placeholder: {
     backgroundColor: '#f0f0f0',

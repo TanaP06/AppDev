@@ -110,7 +110,7 @@ export default function ListingForm({ defaultValues, existingImages = [], onSubm
         name="title"
         rules={{ required: 'Title is required', minLength: { value: 3, message: 'Min 3 characters' }, maxLength: { value: 200, message: 'Max 200 characters' } }}
         render={({ field: { onChange, value } }) => (
-          <TextInput style={[styles.input, errors.title && styles.inputError]} value={value} onChangeText={onChange} placeholder="e.g. Introduction to Algorithm" />
+          <TextInput style={[styles.input, errors.title && styles.inputError]} value={value} onChangeText={onChange} placeholder="e.g. Introduction to Algorithm" placeholderTextColor={Colors.textSecondary} />
         )}
       />
       {errors.title && <Text style={styles.errorText}>{errors.title.message}</Text>}
@@ -120,7 +120,7 @@ export default function ListingForm({ defaultValues, existingImages = [], onSubm
         control={control}
         name="description"
         render={({ field: { onChange, value } }) => (
-          <TextInput style={[styles.input, styles.textarea]} value={value} onChangeText={onChange} placeholder="Describe your item..." multiline numberOfLines={4} />
+          <TextInput style={[styles.input, styles.textarea]} value={value} onChangeText={onChange} placeholder="Describe your item..." placeholderTextColor={Colors.textSecondary} multiline numberOfLines={4} />
         )}
       />
 
@@ -130,7 +130,7 @@ export default function ListingForm({ defaultValues, existingImages = [], onSubm
         name="price"
         rules={{ required: 'Price is required', validate: (v) => parseFloat(v) > 0 || 'Price must be positive' }}
         render={({ field: { onChange, value } }) => (
-          <TextInput style={[styles.input, errors.price && styles.inputError]} value={value} onChangeText={onChange} placeholder="150" keyboardType="numeric" />
+          <TextInput style={[styles.input, errors.price && styles.inputError]} value={value} onChangeText={onChange} placeholder="150" placeholderTextColor={Colors.textSecondary} keyboardType="numeric" />
         )}
       />
       {errors.price && <Text style={styles.errorText}>{errors.price.message}</Text>}
@@ -210,8 +210,8 @@ export default function ListingForm({ defaultValues, existingImages = [], onSubm
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background },
   content: { padding: Spacing.md, paddingBottom: 40 },
-  label: { fontSize: Typography.sm, fontWeight: '600', color: Colors.text, marginBottom: Spacing.xs, marginTop: Spacing.md },
-  input: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.sm, fontSize: Typography.base, color: Colors.text },
+  label: { fontSize: Typography.base, fontWeight: '700', color: Colors.text, marginBottom: Spacing.sm, marginTop: Spacing.lg },
+  input: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, fontSize: Typography.sm, color: Colors.text },
   inputError: { borderColor: Colors.error },
   textarea: { height: 100, textAlignVertical: 'top' },
   errorText: { color: Colors.error, fontSize: Typography.xs, marginTop: 2 },

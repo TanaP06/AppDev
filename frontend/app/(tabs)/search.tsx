@@ -3,6 +3,7 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Activity
 import api from '../../lib/api';
 import { Listing, ListingsResponse, Category, Condition } from '../../lib/types';
 import ListingCard from '../../components/ListingCard';
+import HeaderLogo from '../../components/HeaderLogo';
 import { Colors, Spacing, Typography, Radius } from '../../constants/theme';
 
 const CATEGORIES: { label: string; value: Category }[] = [
@@ -24,10 +25,13 @@ const SORTS = [
 
 const SM_SCREEN = 576;
 const MD_SCREEN = 768;
+const LG_SCREEN = 1024;
+const XL_SCREEN = 1280;
 
 export default function SearchScreen() {
   const { width } = useWindowDimensions();
-  const numColumns = width < SM_SCREEN ? 1 : width < MD_SCREEN ? 2 : 3;
+  const numColumns = width < SM_SCREEN ? 1 : width < MD_SCREEN ? 2 : width < LG_SCREEN ? 3 : width < XL_SCREEN ? 4 : 5;
+  const cardWidth = `${100 / numColumns}%`;
   const [query, setQuery] = useState('');
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(false);
@@ -81,12 +85,14 @@ export default function SearchScreen() {
 
   return (
     <View style={styles.container}>
+      <HeaderLogo description="Find what you're looking for from students right here at Chula — quick, simple, and totally hassle-free." />
       <View style={styles.header}>
         <TextInput
           style={styles.input}
           value={query}
           onChangeText={(t) => { setQuery(t); triggerSearch(t); }}
           placeholder="Search listings..."
+          placeholderTextColor={Colors.textMuted}
           returnKeyType="search"
           onSubmitEditing={() => search(query, selectedCategories, selectedConditions, minPrice, maxPrice, sort)}
         />
@@ -104,7 +110,11 @@ export default function SearchScreen() {
           numColumns={numColumns}
           key={numColumns}
           contentContainerStyle={styles.grid}
-          renderItem={({ item }) => <ListingCard listing={item} />}
+          renderItem={({ item }) => (
+            <View style={{ flex: 1, maxWidth: cardWidth as any }}>
+              <ListingCard listing={item} />
+            </View>
+          )}
           ListEmptyComponent={
             <View style={styles.empty}>
               <Text style={styles.emptyText}>{query ? 'No results found' : 'Type to search'}</Text>
@@ -138,9 +148,9 @@ export default function SearchScreen() {
 
               <Text style={styles.sectionLabel}>Price Range (฿)</Text>
               <View style={styles.priceRow}>
-                <TextInput style={styles.priceInput} value={minPrice} onChangeText={setMinPrice} placeholder="Min" keyboardType="numeric" />
+                <TextInput style={styles.priceInput} value={minPrice} onChangeText={setMinPrice} placeholder="Min" keyboardType="numeric" placeholderTextColor={Colors.textMuted} />
                 <Text style={{ color: Colors.textSecondary, marginHorizontal: Spacing.sm }}>–</Text>
-                <TextInput style={styles.priceInput} value={maxPrice} onChangeText={setMaxPrice} placeholder="Max" keyboardType="numeric" />
+                <TextInput style={styles.priceInput} value={maxPrice} onChangeText={setMaxPrice} placeholder="Max" keyboardType="numeric" placeholderTextColor={Colors.textMuted} />
               </View>
 
               <Text style={styles.sectionLabel}>Sort</Text>
@@ -164,8 +174,8 @@ export default function SearchScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
-  header: { flexDirection: 'row', padding: Spacing.md, paddingTop: 56, gap: Spacing.sm },
+  container: { flex: 1, backgroundColor: 'transparent' },
+  header: { flexDirection: 'row', paddingHorizontal: Spacing.md, paddingBottom: Spacing.md, gap: Spacing.sm },
   input: { flex: 1, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: Typography.base },
   filterBtn: { backgroundColor: Colors.primary, borderRadius: Radius.full, paddingHorizontal: Spacing.md, justifyContent: 'center' },
   filterBtnText: { color: Colors.surface, fontWeight: '600', fontSize: Typography.sm },
@@ -175,14 +185,14 @@ const styles = StyleSheet.create({
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'flex-end' },
   modalContent: { backgroundColor: Colors.surface, borderTopLeftRadius: Radius.lg, borderTopRightRadius: Radius.lg, padding: Spacing.lg, maxHeight: '80%' },
   modalTitle: { fontSize: Typography.xl, fontWeight: '700', color: Colors.text, marginBottom: Spacing.md },
-  sectionLabel: { fontSize: Typography.sm, fontWeight: '600', color: Colors.text, marginTop: Spacing.md, marginBottom: Spacing.xs },
+  sectionLabel: { fontSize: Typography.base, fontWeight: '700', color: Colors.text, marginTop: Spacing.lg, marginBottom: Spacing.sm },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
   chip: { paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, borderRadius: Radius.full, borderWidth: 1, borderColor: Colors.border },
   chipActive: { backgroundColor: Colors.primary, borderColor: Colors.primary },
   chipText: { fontSize: Typography.sm, color: Colors.textSecondary },
   chipTextActive: { color: Colors.surface, fontWeight: '600' },
   priceRow: { flexDirection: 'row', alignItems: 'center' },
-  priceInput: { flex: 1, backgroundColor: Colors.background, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.sm, fontSize: Typography.base },
+  priceInput: { flex: 1, backgroundColor: Colors.background, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, fontSize: Typography.sm, color: Colors.text },
   modalActions: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.lg },
   clearBtn: { flex: 1, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, alignItems: 'center' },
   clearBtnText: { color: Colors.textSecondary, fontWeight: '600' },

@@ -180,6 +180,9 @@ def mark_sold(listing_id):
     if listing.seller_id != int(get_jwt_identity()):
         return jsonify({"error": "Forbidden."}), 403
 
-    listing.is_sold = True
+    req_data = request.get_json(silent=True) or {}
+    is_sold = req_data.get("is_sold", True)
+
+    listing.is_sold = is_sold
     db.session.commit()
     return jsonify(_listing_dict(listing)), 200
