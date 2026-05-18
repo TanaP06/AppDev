@@ -109,7 +109,7 @@ Open `backend/.env` and replace `change-this-to-a-long-random-string` with the o
 python run.py
 ```
 
-Backend runs at **http://localhost:5000**
+Backend runs at **http://localhost:5001**
 
 ### 4. Frontend
 
@@ -138,7 +138,7 @@ npx expo start --web   # opens in browser
 ### `frontend/.env`
 | Variable | Description |
 |---|---|
-| `EXPO_PUBLIC_API_URL` | Base URL of the backend API — `http://localhost:5000` |
+| `EXPO_PUBLIC_API_URL` | Base URL of the backend API — `http://localhost:5001` |
 
 ---
 
